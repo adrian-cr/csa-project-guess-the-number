@@ -8,36 +8,35 @@ import static java.util.Arrays.asList;
 public class GuessTheNumber {
   public static void main(String[] args) {
     /* Global variable setup: */
-    
     int bestScore = 0;
+    
     /* Game environment execution: */
     executionLoop:
     while (true) {
       Scanner sc = new Scanner(System.in);
       /* Introductory message: */
-      System.out.println("\nWelcome to \"THE NUMBER\", a guessing game!");
-      /* Game configuration setup: */
-      System.out.println(
-        "\n" +
-        
-        "Please select game's difficulty:\n\n" +
-                
-        "* Easy (Unlimited attempts) [enter \"E\"]\n" +
-        "* Medium (20 attempts) [enter \"M\"]\n" +
-        "* Hard (10 attempts) [enter \"H\"]\n\n" +
-
-        "(Enter \"EXIT\" to exit the program.)"
-      );
+      System.out.println("\nWelcome to \"THE NUMBER,\" a guessing game!");
+      
+      /* Difficulty mode setup: */
+      System.out.println("\n Please select game's difficulty:\n");
+      System.out.println("* Easy (Unlimited attempts) [enter \"E\"]");
+      System.out.println("* Medium (20 attempts) [enter \"M\"]");
+      System.out.println("* Hard (10 attempts) [enter \"H\"]\n");
+      System.out.println("(Enter \"EXIT\" to exit the program.)");
       String difficulty = sc.nextLine().toUpperCase();
+      
+      /* Exit check: */
       if (difficulty.equals("EXIT")) break executionLoop;
+      
+      /* Difficulty mode check: */
       if (!asList("E", "M", "H").contains(difficulty)) {
         System.out.println("*****Please enter a valid difficulty value*****\n".toUpperCase());
         continue;
-      }
+      }//if
       String mode = difficulty.equals("E")? "easy" : difficulty.equals("M")? "medium" : "hard";
-      System.out.print("You have selected " + mode.toUpperCase() + " mode\n\n");
+      System.out.print("You have selected " + mode.toUpperCase() + " mode!\n\n");
       
-      /* Range check */
+      /* Range set up */
       boolean rangeValid = false;
       int rangeStart;
       int rangeEnd;
@@ -46,15 +45,14 @@ public class GuessTheNumber {
         rangeStart = sc.nextInt();
         System.out.print("Please enter the range end number: ");
         rangeEnd = sc.nextInt();
+        /*  Range check: */
         rangeValid = rangeEnd-rangeStart>0? true : false;
         if (rangeValid) break;
         System.out.println("\n*****Please enter a valid range*****\n".toUpperCase());
-        
       } while (!rangeValid);
       
-      
-      /* Configuration summary: */
-      System.out.println("\n" + "You have chosen to play in " + mode.toUpperCase() + " mode\nfor a range from " + rangeStart + " to " + rangeEnd + ". Let's play!\n\n" + "------------------ THE NUMBER ------------------");
+      /* Setup summary: */
+      System.out.println("\nYou have chosen to play in " + mode.toUpperCase() + " mode\nfor a range from " + rangeStart + " to " + rangeEnd + ". Let's play!\n");
       
       /* In-game variable setup */
       int winningNumber = new Random().nextInt(rangeEnd-rangeStart+1) + rangeStart;
@@ -63,6 +61,7 @@ public class GuessTheNumber {
       boolean win = false;
       
       /* Game execution */
+      System.out.println("------------------ THE NUMBER ------------------");
       gameLoop:
       while (mode.equals("easy")? true : attemptsLeft>0) {
         /* Score increase: */
@@ -94,7 +93,7 @@ public class GuessTheNumber {
       System.out.println("\n---------------------------------\n");
       
       /* New game check: */
-      System.out.println("(Enter any key to start a new game. Enter \"exit\" to exit.)");
+      System.out.println("(Enter any key to start a new game. Enter \"EXIT\" to exit the program.)");
       String newGame = sc.next().toUpperCase();
         if (newGame.equals("EXIT")) break executionLoop;
     }//while - executionLoop
